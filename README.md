@@ -27,6 +27,21 @@ The CSV contains PDF URLs discovered by querying the Wayback Machine's CDX API -
 
 This lets us find PDFs that berlin.de has removed but the Wayback Machine preserved.
 
+## Completeness
+
+How many issues we have vs. the highest issue number published that year (our best estimate of total issues). Each year may also have a Sonderregister (special index issue).
+
+| Year | Issues | Of total | Completeness | Missing |
+|------|--------|----------|--------------|---------|
+| 2020 | 10 | 55 | 18% | 1-13, 16-39, 46-50, 52-54 |
+| 2021 | 28 | 58 | 48% | 1-14, 17-19, 21-22, 25-28, 30, 38-40, 42-44 |
+| 2022 | 48 | 54 | 89% | 28-29, 34-35, 37, 39 |
+| 2023 | 49 | 57 | 86% | 30-31, 33-38 |
+| 2024 | 55 | 55 | **100%** | — |
+| 2025 | 39 | 51 | 76% | 7, 24-25, 33-34, 36-37, 44-45, 47-48, 50 |
+
+2020 and 2021 are largely incomplete because the Wayback Machine only started crawling these PDFs partway through those years. 2024 is the only fully complete year.
+
 ## Usage
 
 ```bash
