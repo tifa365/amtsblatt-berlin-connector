@@ -139,8 +139,12 @@ async def search_pages(
     """
     db = await get_db()
 
+    # Quote each word to prevent FTS5 operator interpretation
+    # (hyphens as NOT, spaces as implicit AND on raw tokens)
+    safe_query = " ".join(f'"{word}"' for word in query.split())
+
     where_clauses = ["pages_fts MATCH :query"]
-    params: dict = {"query": query, "limit": limit, "offset": offset}
+    params: dict = {"query": safe_query, "limit": limit, "offset": offset}
 
     if year is not None:
         where_clauses.append("i.year = :year")
