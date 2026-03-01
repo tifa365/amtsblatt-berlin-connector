@@ -78,17 +78,23 @@ uv run uvicorn amtsblatt.api:app
 
 ## Automated ingestion
 
+> **⚠️ Not yet running in production.** The ingestion script exists and works, but no scheduled job is set up yet. New issues are not being archived automatically — this needs a server with persistent storage (VPS, Render, etc.) to run reliably. Contributions welcome.
+
 New issues are discovered from berlin.de and the Wayback Machine, downloaded, and extracted:
 
 ```bash
 uv run python scripts/fetch_new.py
 ```
 
-This is idempotent — safe to run on a daily cron:
+This is idempotent — safe to run repeatedly. The planned deployment is a daily cron on a server with persistent disk:
 
 ```cron
 30 08 * * * cd /path/to/amtsblatt && uv run python scripts/fetch_new.py >> data/logs/fetch.log 2>&1
 ```
+
+### Why not GitHub Actions?
+
+The SQLite database (~85 MB) and PDF archive (~580 MB) need persistent storage. GitHub Actions runners are ephemeral, so each run would need to download/re-upload the full database — slow, fragile, and wasteful of CI minutes for a job that usually finds zero new issues. The right home for this is a server with a persistent filesystem.
 
 ## How it works
 
